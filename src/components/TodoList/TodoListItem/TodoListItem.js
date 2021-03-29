@@ -1,44 +1,40 @@
 import React from 'react'
 import './TodoListItem.css'
 
-class TodoListItem extends React.Component {
+const TodoListItem = ({ important, done,
+                          label, onToggleImportant, onToggleDone, onDelete }) => {
 
-    state = {
-        done: false
+    let classNames = 'todo-list-item';
+    if (important) {
+        classNames += ' important';
     }
 
-    onLabelClick = () => {
-        this.setState({
-            done: true
-        })
+    if (done) {
+        classNames += ' done';
     }
 
-    render() {
-        let {label, important = false} = this.props;
 
-        let classNames = 'todo-list-item'
-        if(this.state.done) {
-            classNames += ' done'
-        }
-        const style = {
-            color: important ? 'steelblue' : 'black',
-            fontWeight: important ? 'bold' : 'normal'
-        };
-
-        return (
-            <span className={classNames}>
-                <span className="todo-list-item-label" style={style} onClick={this.onLabelClick}>
-                {label}
-                </span>
-                <button type="button" className="btn btn-outline-danger btn-sm float-right">
-                <i className="bi bi-archive-fill"/>
+    return (
+        <span className={classNames}>
+            <span
+              className="todo-list-item-label"
+              onClick={onToggleDone}>{label}</span>
+            <span className="float">
+                <button type="button"
+                      className="btn btn-outline-success btn-sm"
+                      onClick={onToggleImportant}>
+                <i className="bi bi-exclamation"></i>
                 </button>
-                <button type="button" className="btn btn-outline-success btn-sm float-right">
-                <i className="bi bi-exclamation"/>
-            </button>
+
+                <button type="button"
+                      className="btn btn-outline-danger btn-sm"
+                      onClick={onDelete}>
+                <i className="bi bi-archive-fill"></i>
+                </button>
+            </span>
         </span>
         );
-    }
-}
+};
 
 export default TodoListItem;
+

@@ -2,23 +2,22 @@ import React from "react";
 import TodoListItem from "./TodoListItem/TodoListItem";
 import './TodoList.css'
 
-const TodoList = ({ todoData }) => {
+const TodoList = ({ items, onToggleImportant, onToggleDone, onDelete }) => {
 
-    const elements = todoData.map((item) => {
+    const elements = items.map((item) => {
         const { id, ...itemProps } = item;
-
         return (
             <li key={id} className="list-group-item">
-                <TodoListItem {...itemProps } />
+                <TodoListItem
+                    { ...itemProps }
+                    onToggleImportant={ () => onToggleImportant(id) }
+                    onToggleDone={ () => onToggleDone(id) }
+                    onDelete={ () => onDelete(id) } />
             </li>
         );
     });
 
-    return (
-        <ul className="list-group todo-list">
-            {elements}
-        </ul>
-    );
+    return (<ul className="todo-list list-group">{ elements }</ul>);
 };
 
 export default TodoList;
